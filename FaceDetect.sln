@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FaceDetect", "FaceDetect\FaceDetect.vcproj", "{8E56C4FC-6C19-4494-A8FE-1C4723512331}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E56C4FC-6C19-4494-A8FE-1C4723512331}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8E56C4FC-6C19-4494-A8FE-1C4723512331}.Debug|Win32.Build.0 = Debug|Win32
+		{8E56C4FC-6C19-4494-A8FE-1C4723512331}.Release|Win32.ActiveCfg = Release|Win32
+		{8E56C4FC-6C19-4494-A8FE-1C4723512331}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
