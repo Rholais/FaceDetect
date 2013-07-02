@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "../FaceDetect.h"
-
+#include <windows.h>
 #include "precomp.hpp"
 #include "opencv2/opencv.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -53,9 +53,9 @@ const int FD_RENEW = 2;
 
 static double pos[][3] = 
 {
-	{ 0x00, 0x00, 0x00 },
-	{ 0x00, 0x00, 0x00 },
-	{ 0x00, 0x00, 0x00 },
+	{ 0.0, 0.0, 0.0 },
+	{ 0.0, 0.0, 0.0 },
+	{ 0.0, 0.0, 0.0 },
 };
 
 void OpenCVInit()
@@ -69,12 +69,19 @@ void OpenCVInit()
 
 	if( !cascade )
 	{
+		MessageBox(0,"ERROR: Could not load classifier cascade\n","",MB_OK);
 		fprintf_s( stderr, "ERROR: Could not load classifier cascade\n" );
 		fprintf_s( stderr,
 			"Usage: facedetect --cascade=\"<cascade_path>\" [filename|camera_index]\n" );
 		return ;
 	}
 	storage = cvCreateMemStorage();
+	if( !storage )
+	{
+		MessageBox(0,"ERROR: Could not create memory storage\n","",MB_OK);
+		fprintf_s( stderr, "ERROR: Could not create memory storage\n" );
+		return ;
+	}
 }
 void ReleaseOpenCV()
 {
@@ -159,7 +166,9 @@ int detect_and_draw( IplImage* img , int zoom, int dat[])
 	}
 	cvResize( gray, small_img, CV_INTER_LINEAR );
 	cvEqualizeHist( small_img, small_img );
+	
 	cvClearMemStorage( storage );
+	//MessageBox(0,"Clear Succeed.","",MB_OK);
 	if( cascade )
 	{
 		CvSeq* faces = cvHaarDetectObjects( small_img, cascade, storage,
@@ -223,7 +232,18 @@ int detect_and_draw( IplImage* img , int zoom, int dat[])
 FACEDETECT_API void fdGetPos(double* position, unsigned int flag = 0)
 {
 	int dat[4] = {0};
-	capture = cvCaptureFromCAM(0);
+	try
+	{
+		capture = cvCaptureFromCAM(0);
+		if(!capture)
+		{
+			throw(std::exception("Capture Failed."));
+		}
+	}
+	catch(std::exception ex)
+	{
+		MessageBox(0,ex.what(),"",MB_OK);
+	}
 	if( capture )
 	{
 		while(true)
@@ -252,6 +272,7 @@ FACEDETECT_API void fdGetPos(double* position, unsigned int flag = 0)
 				{
 					cvFlip( frame, frame_copy, 0 );
 				}
+				//MessageBox(0,"Retrieve Succeed.","",MB_OK);
 
 				detect_and_draw( frame_copy , D2I(scale), dat);
 
