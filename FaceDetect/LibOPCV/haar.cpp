@@ -1519,6 +1519,7 @@ CvSeq*
 	if( !storage )
 	{
 		CV_Error( CV_StsNullPtr, "Null storage pointer" );
+		MessageBox(0, "Null storage pointer", "", MB_OK);
 	}
 
 	img = cvGetImage( img, &stub);
