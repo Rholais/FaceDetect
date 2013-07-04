@@ -41,7 +41,6 @@
 
 /* Haar features calculation */
 #include "stdafx.h"
-#include <windows.h>
 
 #include "precomp.hpp"
 #include <stdio.h>
@@ -1513,13 +1512,11 @@ CvSeq*
 	if( !CV_IS_HAAR_CLASSIFIER(cascade) )
 	{
 		CV_Error( !cascade ? CV_StsNullPtr : CV_StsBadArg, "Invalid classifier cascade" );
-		MessageBox(0, "Invalid classifier cascade", "", MB_OK);
 	}
 
 	if( !storage )
 	{
 		CV_Error( CV_StsNullPtr, "Null storage pointer" );
-		MessageBox(0, "Null storage pointer", "", MB_OK);
 	}
 
 	img = cvGetImage( img, &stub);

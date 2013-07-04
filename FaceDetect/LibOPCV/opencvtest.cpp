@@ -19,15 +19,15 @@
 #define WIN32
 #endif
 #ifdef _DEBUG
-#pragma comment(lib, "LibOPCV/lib/opencv_core245d.lib")
-#pragma comment(lib, "LibOPCV/lib/opencv_highgui245d.lib")
-#pragma comment(lib, "LibOPCV/lib/opencv_imgproc245d.lib")
-#pragma comment(lib, "LibOPCV/lib/opencv_objdetect245d.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_core246d.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_highgui246d.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_imgproc246d.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_objdetect246d.lib")
 #else
-#pragma comment(lib, "LibOPCV/lib/opencv_core245.lib")
-#pragma comment(lib, "LibOPCV/lib/opencv_highgui245.lib")
-#pragma comment(lib, "LibOPCV/lib/opencv_imgproc245.lib")
-#pragma comment(lib, "LibOPCV/lib/opencv_objdetect245.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_core246.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_highgui246.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_imgproc246.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_objdetect246.lib")
 #endif
 
 static CvMemStorage* storage = NULL;
