@@ -30,12 +30,15 @@
 #pragma comment(lib, "LibOPCV/lib/opencv_objdetect246.lib")
 #endif
 
+using namespace cv;
+
 static CvMemStorage* storage = NULL;
 static CvHaarClassifierCascade* cascade = NULL;
 static CvCapture* capture = NULL;
 static IplImage *frame = NULL;
 static IplImage *frame_copy = NULL;
 static CvRect* roi = NULL;
+static VideoCapture *cap;
 
 int detect_and_draw( IplImage* image, int zoom, int dat[]);
 void sphere_to_decare(int dat[], double position[], CvSize size);
@@ -86,9 +89,17 @@ void OpenCVInit()
 void ReleaseOpenCV()
 {
 	if( cascade )
+	{
 		cvReleaseHaarClassifierCascade(&cascade);
+	}
+	if(cap)
+	{
+		delete cap;
+	}
 	if ( storage )
+	{
 		cvReleaseMemStorage( &storage );
+	}
 }
 
 FACEDETECT_API int FaceDetectOP(int width, int height, int zoom, void* buf, int dat[])
