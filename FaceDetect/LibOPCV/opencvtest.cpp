@@ -40,7 +40,7 @@ static IplImage *frame_copy = NULL;
 static CvRect* roi = NULL;
 static VideoCapture *cap;
 
-int detect_and_draw( IplImage* image, int zoom, int dat[]);
+int detect_and_draw( CvArr* _img, int zoom, int dat[]);
 void sphere_to_decare(int dat[], double position[], CvSize size);
 
 const char* cascade_name =
@@ -101,7 +101,7 @@ void ReleaseOpenCV()
 		cvReleaseMemStorage( &storage );
 	}
 }
-
+//
 FACEDETECT_API int FaceDetectOP(int width, int height, int zoom, void* buf, int dat[])
 //int main( int argc, char** argv )
 {
@@ -138,8 +138,9 @@ FACEDETECT_API int FaceDetectOP(int width, int height, int zoom, void* buf, int 
 	return fn;
 }
 
-int detect_and_draw( IplImage* img , int zoom, int dat[])
+int detect_and_draw( CvArr* _img , int zoom, int dat[])
 {
+	IplImage *img = (IplImage*)_img;
 	int fn= 0;
 	IplImage* gray = cvCreateImage( cvSize(img->width,img->height), 8, 1 );
 	cvCvtColor( img, gray, CV_BGR2GRAY );
