@@ -35,9 +35,10 @@ using namespace cv;
 static CvMemStorage* storage = NULL;
 static CvHaarClassifierCascade* cascade = NULL;
 static CvCapture* capture = NULL;
-static IplImage *frame = NULL;
+static Mat frame;
 static IplImage *frame_copy = NULL;
 static CvRect* roi = NULL;
+
 static VideoCapture *cap;
 
 int detect_and_draw( CvArr* _img, int zoom, int dat[]);
@@ -91,10 +92,6 @@ void ReleaseOpenCV()
 	if( cascade )
 	{
 		cvReleaseHaarClassifierCascade(&cascade);
-	}
-	if(cap)
-	{
-		delete cap;
 	}
 	if ( storage )
 	{
@@ -246,8 +243,9 @@ FACEDETECT_API void fdGetPos(double* position, unsigned int flag = 0)
 	int dat[4] = {0};
 	try
 	{
-		capture = cvCaptureFromCAM(0);
-		if(!capture)
+		//capture = cvCaptureFromCAM(0);
+		cap = new VideoCapture(0);
+		if(!cap)
 		{
 			throw(std::exception("Capture Failed."));
 		}
@@ -256,39 +254,42 @@ FACEDETECT_API void fdGetPos(double* position, unsigned int flag = 0)
 	{
 		MessageBox(0,ex.what(),"",MB_OK);
 	}
-	if( capture )
+	if( cap )
 	{
 		while(true)
 		{
 			if( flag & FD_CAMARA )
 			{
-				if( !cvGrabFrame( capture ))
+				if( !cap->grab())
 				{
 					break;
 				}
-				frame = cvRetrieveFrame( capture );
-				if( !frame )
-				{
-					break;
-				}
+				//frame = cvRetrieveFrame( capture );
+				cap->retrieve(frame);
+				//if( !frame )
+				//{
+				//	break;
+				//}
 				if( !frame_copy )
 				{
-					frame_copy = cvCreateImage( cvSize(frame->width,frame->height),
-						IPL_DEPTH_8U, frame->nChannels );
+					frame_copy = cvCreateImage( cvSize(frame.cols,frame.rows),
+						IPL_DEPTH_8U, 3 );
 				}
-				if( frame->origin == IPL_ORIGIN_TL )
-				{
-					cvCopy( frame, frame_copy, 0 );
-				}
-				else
-				{
-					cvFlip( frame, frame_copy, 0 );
-				}
+				CvMat arr = frame;
+				frame_copy = cvGetImage(&arr, frame_copy);
+				//if( frame->origin == IPL_ORIGIN_TL )
+				//{
+				//	cvCopy( frame, frame_copy, 0 );
+				//}
+				//else
+				//{
+				//	cvFlip( frame, frame_copy, 0 );
+				//}
 				//MessageBox(0,"Retrieve Succeed.","",MB_OK);
 
 				detect_and_draw( frame_copy , D2I(scale), dat);
 
-				sphere_to_decare(dat, position, cvSize(frame->width, frame->height));
+				sphere_to_decare(dat, position, cvSize(frame.cols, frame.rows));
 				
 				flag |= FD_RENEW;
 			}
