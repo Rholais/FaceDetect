@@ -34,7 +34,6 @@ using namespace cv;
 
 static CvMemStorage* storage = NULL;
 static CvHaarClassifierCascade* cascade = NULL;
-static CvCapture* capture = NULL;
 static Mat frame;
 static IplImage *frame_copy = NULL;
 static CvRect* roi = NULL;
@@ -243,7 +242,6 @@ FACEDETECT_API void fdGetPos(double* position, unsigned int flag = 0)
 	int dat[4] = {0};
 	try
 	{
-		//capture = cvCaptureFromCAM(0);
 		cap = new VideoCapture(0);
 		if(!cap)
 		{
@@ -264,12 +262,7 @@ FACEDETECT_API void fdGetPos(double* position, unsigned int flag = 0)
 				{
 					break;
 				}
-				//frame = cvRetrieveFrame( capture );
 				cap->retrieve(frame);
-				//if( !frame )
-				//{
-				//	break;
-				//}
 				if( !frame_copy )
 				{
 					frame_copy = cvCreateImage( cvSize(frame.cols,frame.rows),
@@ -279,11 +272,11 @@ FACEDETECT_API void fdGetPos(double* position, unsigned int flag = 0)
 				frame_copy = cvGetImage(&arr, frame_copy);
 				//if( frame->origin == IPL_ORIGIN_TL )
 				//{
-				//	cvCopy( frame, frame_copy, 0 );
+				//		cvCopy( frame, frame_copy, 0 );
 				//}
 				//else
 				//{
-				//	cvFlip( frame, frame_copy, 0 );
+				//		cvFlip( frame, frame_copy, 0 );
 				//}
 				//MessageBox(0,"Retrieve Succeed.","",MB_OK);
 
