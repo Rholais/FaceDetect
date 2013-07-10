@@ -182,9 +182,6 @@ int detect_and_draw( CvArr* _img , int zoom, int dat[])
 		CvSeq* faces = cvHaarDetectObjects( small_img, cascade, storage,
 			1.1, 2, CV_HAAR_FIND_BIGGEST_OBJECT/*CV_HAAR_DO_CANNY_PRUNING*/,
 			cvSize(30, 30) );
-		//t += cvGetTickCount();
-		//printf( "detection time = %fms\t%d\n", t/(cvGetTickFrequency()*1000), faces->total );
-		//t = static_cast<double>(-cvGetTickCount());
 		int k=0;
 		if(faces && faces->total >= 1)
 		{
