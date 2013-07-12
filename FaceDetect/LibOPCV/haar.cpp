@@ -1497,7 +1497,7 @@ CvSeq*
 	IplImage *img = (IplImage*)_img;
 	cv::Ptr<IplImage> temp;	// CV_8UC1
 	cv::Ptr<CvMat> sum;		// CV_32UC1
-	cv::Ptr<CvMat> tilted;	// CV_32SC1
+	cv::Ptr<CvMat> tilted;		// CV_32SC1
 	cv::Ptr<CvMat> sqsum;	// CV_64UC1
 	CvSeq* result_seq = 0;
 	cv::Ptr<CvMemStorage> temp_storage;
