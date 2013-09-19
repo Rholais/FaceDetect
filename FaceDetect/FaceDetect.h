@@ -22,4 +22,4 @@ extern FACEDETECT_API int nFaceDetect;
 FACEDETECT_API int FaceDetect(int width, int height, unsigned char* buffer, int* data);
 FACEDETECT_API int FaceDetectEx(int width, int height, int zoom, void* buf, int dat[]);
 FACEDETECT_API int FaceDetectOP(int width, int height, int zoom, void* buf, int dat[]);
-FACEDETECT_API void fdGetPos(double* position, unsigned int flag);
+FACEDETECT_API void fdGetPos(float* position, unsigned int flag);

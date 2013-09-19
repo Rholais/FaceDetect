@@ -41,7 +41,7 @@ static CvRect* roi = NULL;
 static VideoCapture *cap;
 
 int detect_and_draw( CvArr* _img, int zoom, int dat[]);
-void sphere_to_decare(int dat[], double position[], CvSize size);
+void sphere_to_decare(int dat[], float *position, CvSize size);
 
 const char* cascade_name =
 "haarcascade_frontalface_alt.xml";
@@ -51,14 +51,16 @@ static double scale = 1;
 
 double t = 0;
 
-const int FD_CAMARA = 1;
-const int FD_RENEW = 2;
+const unsigned int FD_CAMARA = 1;
+const unsigned int FD_RENEW = 2;
+const unsigned int FD_REGION = 4;
+const unsigned int FD_LOCKED = 8;
 
-static double pos[][3] = 
+static double pos[][4] = 
 {
-	{ 0.0, 0.0, 0.0 },
-	{ 0.0, 0.0, 0.0 },
-	{ 0.0, 0.0, 0.0 },
+	{ 0.0, 0.0, 0.0, 0.0 },
+	{ 0.0, 0.0, 0.0, 0.0 },
+	{ 0.0, 0.0, 0.0, 0.0 },
 };
 
 void OpenCVInit()
@@ -199,7 +201,7 @@ int detect_and_draw( CvArr* _img , int zoom, int dat[])
 				}
 				fn++;
 
-				roi = new CvRect(cvRect(dat[k-4] - dat[k-2] / 2, dat[k-3] - dat[k-1] / 2, dat[k-2] * 2, dat[k-1] * 2));
+				roi = new CvRect(cvRect(dat[k-4] - dat[k-2], dat[k-3] - dat[k-1], dat[k-2] * 3, dat[k-1] * 3));
 				if(roi->x < 0)
 				{
 					roi->width -= -(roi->x);
@@ -234,9 +236,13 @@ int detect_and_draw( CvArr* _img , int zoom, int dat[])
 	return fn;
 }
 
-FACEDETECT_API void fdGetPos(double* position, unsigned int flag = 0)
+FACEDETECT_API void fdGetPos(float* position, unsigned int flag = 0)
 {
-	int dat[4] = {0};
+	int* dat = new int[4];
+	for(int i = 0; i != 4; ++i)
+	{
+		dat[i] = 0;
+	}
 	try
 	{
 		cap = new VideoCapture(0);
@@ -278,25 +284,37 @@ FACEDETECT_API void fdGetPos(double* position, unsigned int flag = 0)
 				//MessageBox(0,"Retrieve Succeed.","",MB_OK);
 
 				detect_and_draw( frame_copy , D2I(scale), dat);
+				if(flag | FD_REGION)
+				{
+					flag |= FD_LOCKED;
+					for(int i = 0; i != 4; ++i)
+					{
+						pos[2][i] = dat[i];
+					}
+					flag &=  (~FD_LOCKED);
+				}
+				else
+				{
+					sphere_to_decare(dat, position, cvSize(frame.cols, frame.rows));
+				}
+				for(int i = 0; i != 4; ++i)
+				{
+					position[i] = 0.1 * pos[0][i] + 0.3 * pos[1][i] + 0.6 * pos[2][i];
+					pos[0][i] = pos[1][i];
+					pos[1][i] = pos[2][i];
+				}
 
-				sphere_to_decare(dat, position, cvSize(frame.cols, frame.rows));
-				
 				flag |= FD_RENEW;
 			}
 		}
 	}
+	delete [] dat;
 }
 
 // 将摄像头截图的相对坐标转换为三维直角坐标
-void sphere_to_decare(int dat[], double position[], CvSize size)
+void sphere_to_decare(int dat[], float *position, CvSize size)
 {
 	pos[2][2] = 284.8 / (dat[2] + dat[3]);
 	pos[2][0] = (dat[0] + dat[2] / 2 - size.width / 2) / 36.3 / position[2];
 	pos[2][1] = (dat[1] + dat[3] / 2 - size.height / 2) / 36.3 / position[2];
-	for(int i = 0; i != 3; ++i)
-	{
-		position[i] = 0.1 * pos[0][i] + 0.3 * pos[1][i] + 0.6 * pos[2][i];
-		pos[0][i] = pos[1][i];
-		pos[1][i] = pos[2][i];
-	}
 }
