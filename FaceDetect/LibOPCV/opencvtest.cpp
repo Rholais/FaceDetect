@@ -55,6 +55,7 @@ const unsigned int FD_CAMARA = 1;
 const unsigned int FD_RENEW = 2;
 const unsigned int FD_REGION = 4;
 const unsigned int FD_LOCKED = 8;
+const unsigned int FD_RETURN = 16;
 
 static double pos[][4] = 
 {
@@ -201,7 +202,7 @@ int detect_and_draw( CvArr* _img , int zoom, int dat[])
 				}
 				fn++;
 
-				roi = new CvRect(cvRect(dat[k-4] - dat[k-2], dat[k-3] - dat[k-1], dat[k-2] * 3, dat[k-1] * 3));
+				roi = new CvRect(cvRect(dat[k-4] - dat[k-2] / 2, dat[k-3] - dat[k-1] / 2, dat[k-2] * 2, dat[k-1] * 2));
 				if(roi->x < 0)
 				{
 					roi->width -= -(roi->x);
@@ -257,7 +258,7 @@ FACEDETECT_API void fdGetPos(float* position, unsigned int flag = 0)
 	}
 	if( cap )
 	{
-		while(true)
+		while(! (flag & FD_RETURN))
 		{
 			if( flag & FD_CAMARA )
 			{
