@@ -237,6 +237,9 @@ int detect_and_draw( CvArr* _img , int zoom, int dat[])
 	return fn;
 }
 
+FACEDETECT_API int FdWidth = 0;
+FACEDETECT_API int FdHeight = 0;
+
 FACEDETECT_API void fdGetPos(float* position, unsigned int flag = 0)
 {
 	int* dat = new int[4];
