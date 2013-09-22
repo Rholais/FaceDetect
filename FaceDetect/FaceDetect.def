@@ -5,9 +5,9 @@ DESCRIPTION  'FaceDetect Windows Dynamic Link Library'
 
 EXPORTS
     ; Explicit exports can go here
-FaceDetect			@1
-FaceDetectEx		@2
+FaceDetect		@1
+FaceDetectEx	@2
 FaceDetectOP	@3
-fdGetPos			@4
-FdWidth				@5
-FdHeight				@6
+fdGetPos		@4
+FdWidth			@5
+FdHeight		@6
