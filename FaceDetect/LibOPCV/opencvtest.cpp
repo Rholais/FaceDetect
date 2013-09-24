@@ -270,9 +270,14 @@ FACEDETECT_API void fdGetPos(float* position, unsigned int flag = 0)
 					break;
 				}
 				cap->retrieve(frame);
+				if(!FdWidth || !FdHeight)
+				{
+					FdWidth = frame.cols;
+					FdHeight = frame.rows;
+				}
 				if( !frame_copy )
 				{
-					frame_copy = cvCreateImage( cvSize(frame.cols,frame.rows),
+					frame_copy = cvCreateImage( cvSize(FdWidth, FdHeight),
 						IPL_DEPTH_8U, 3 );
 				}
 				CvMat arr = frame;
@@ -299,7 +304,7 @@ FACEDETECT_API void fdGetPos(float* position, unsigned int flag = 0)
 				}
 				else
 				{
-					sphere_to_decare(dat, position, cvSize(frame.cols, frame.rows));
+					sphere_to_decare(dat, position, cvSize(FdWidth, FdHeight));
 				}
 				for(int i = 0; i != 4; ++i)
 				{
