@@ -143,7 +143,7 @@ int detect_and_draw( CvArr* _img , int zoom, int dat[])
 	int fn= 0;
 	IplImage *gray = cvCreateImage( cvSize(img->width,img->height), 8, 1 );
 	cvCvtColor( img, gray, CV_BGR2GRAY );
-	IplImage* small_img;
+	IplImage *small_img;
 	if(roi)
 	{
 		cvSetImageROI(gray, *roi);
