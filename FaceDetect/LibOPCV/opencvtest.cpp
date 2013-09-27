@@ -137,7 +137,7 @@ FACEDETECT_API int FaceDetectOP(int width, int height, int zoom, void* buf, int 
 	return fn;
 }
 
-int detect_and_draw( CvArr* _img , int zoom, int dat[])
+int detect_and_draw( CvArr *_img , int zoom, int dat[])
 {
 	IplImage *img = (IplImage*)_img;
 	int fn= 0;
