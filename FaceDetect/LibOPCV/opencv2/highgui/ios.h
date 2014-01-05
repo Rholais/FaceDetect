@@ -1,3 +1,4 @@
+
 /*M///////////////////////////////////////////////////////////////////////////////////////
 //
 //  IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING.
@@ -7,11 +8,11 @@
 //  copy or use the software.
 //
 //
-//                           License Agreement
+//                          License Agreement
 //                For Open Source Computer Vision Library
 //
 // Copyright (C) 2000-2008, Intel Corporation, all rights reserved.
-// Copyright (C) 2009-2010, Willow Garage Inc., all rights reserved.
+// Copyright (C) 2009, Willow Garage Inc., all rights reserved.
 // Third party copyrights are property of their respective owners.
 //
 // Redistribution and use in source and binary forms, with or without modification,
@@ -40,19 +41,9 @@
 //
 //M*/
 
-#ifndef __OPENCV_WORLD_HPP__
-#define __OPENCV_WORLD_HPP__
-
 #include "opencv2/core/core.hpp"
+#import "opencv2/highgui/cap_ios.h"
 
-#ifdef __cplusplus
-namespace cv
-{
-
-CV_EXPORTS_W bool initAll();
-
-}
-
-#endif
-
-#endif
+UIImage* MatToUIImage(const cv::Mat& image);
+void UIImageToMat(const UIImage* image,
+                         cv::Mat& m, bool alphaExist = false);
