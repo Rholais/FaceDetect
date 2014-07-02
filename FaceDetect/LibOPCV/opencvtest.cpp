@@ -19,15 +19,15 @@
 #define WIN32
 #endif
 #ifdef _DEBUG
-#pragma comment(lib, "LibOPCV/lib/opencv_core248d.lib")
-#pragma comment(lib, "LibOPCV/lib/opencv_highgui248d.lib")
-#pragma comment(lib, "LibOPCV/lib/opencv_imgproc248d.lib")
-#pragma comment(lib, "LibOPCV/lib/opencv_objdetect248d.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_core249d.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_highgui249d.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_imgproc249d.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_objdetect249d.lib")
 #else
-#pragma comment(lib, "LibOPCV/lib/opencv_core248.lib")
-#pragma comment(lib, "LibOPCV/lib/opencv_highgui248.lib")
-#pragma comment(lib, "LibOPCV/lib/opencv_imgproc248.lib")
-#pragma comment(lib, "LibOPCV/lib/opencv_objdetect248.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_core249.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_highgui249.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_imgproc249.lib")
+#pragma comment(lib, "LibOPCV/lib/opencv_objdetect249.lib")
 #endif
 
 using namespace cv;
